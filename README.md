@@ -1,8 +1,8 @@
-h1. JMX Annotations
+# JMX Annotations
 
-Simplifies the creation and registration of MBeans by providing some annotations that you can easily add to your classes.
+A lightweight library that has no external dependencies and simplifies the creation and registration of JMX MBeans by providing some annotations that you can easily add to your classes.
 
-For example, take a look at the following class:
+Let's take a look at the following class:
 
 ```java
 @ManagedBean
@@ -27,12 +27,12 @@ public class Statistics {
 }
 ```
 
-We can now register it in one single line of code:
+As you can see the class is annotated with `net.gescobar.jmx.annotation.ManagedBean`, the `getCounter()` method with `net.gescobar.jmx.annotation.ManagedAttribute` and the `resetCounter()` method with `net.gescobar.jmx.annotation.ManagedOperation`. We can now register the JMX MBean in one single line of code:
 
 ```java
 Management.register(new Statistics(), "org.test:type=Statistics");
 ```
 
-In this case the bean will be registered in the default MBeanServer that is retrieved using `ManagementFactory.getPlatformMBeanServer()`.
+This will create a DynamicMBean from the object and will register it in the default MBeanServer that is retrieved using `ManagementFactory.getPlatformMBeanServer()` method.
 
 That's it. Enjoy!
