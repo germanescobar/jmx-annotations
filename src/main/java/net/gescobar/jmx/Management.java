@@ -19,7 +19,12 @@ import net.gescobar.jmx.impl.MBeanFactory;
  * 
  * @author German Escobar
  */
-public class Management {
+public final class Management {
+	
+	/**
+	 * Hide public constructor.
+	 */
+	private Management() {}
 
 	/**
 	 * <p>Registers an object with the specified <code>name</code> in the default <code>MBeanServer</code> (which is 

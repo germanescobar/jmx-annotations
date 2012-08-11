@@ -94,11 +94,11 @@ public class MBeanImpl implements DynamicMBean {
 
     	// build the result attribute list
     	for (int i=0 ; i < attributesNames.length ; i++){
-    		try {        
+    		try {
     			Object value = getAttribute((String) attributesNames[i]);     
     			resultList.add(new Attribute(attributesNames[i], value));
     		} catch (Exception e) {
-    			e.printStackTrace();
+    			throw new RuntimeException(e);
     		}
     	}
 
@@ -184,7 +184,7 @@ public class MBeanImpl implements DynamicMBean {
     			Object value = getAttribute(name); 
     			resultList.add(new Attribute(name,value));
     		} catch(Exception e) {
-    			e.printStackTrace();
+    			throw new RuntimeException(e);
     		}
     	}
 
@@ -410,17 +410,27 @@ public class MBeanImpl implements DynamicMBean {
      * 
      * @return true if the <code>from</code> class is assignable to the <code>to</code> class.
      */
-    private boolean isAssignable(Class<?> to, Class<?> from) {
+    private boolean isAssignable(final Class<?> to, final Class<?> from) {
     	
-    	if (to.isPrimitive()) {
-    		to = fromPrimitiveToObject(to);
+    	if (to == null) {
+    		throw new IllegalArgumentException("no to class specified");
+    	}
+    	
+    	if (from == null) {
+    		throw new IllegalArgumentException("no from class specified");
+    	}
+    	
+    	Class<?> toClass = to;
+    	if (toClass.isPrimitive()) {
+    		toClass = fromPrimitiveToObject(toClass);
     	}
 
-    	if (from.isPrimitive()) {
-    		from = fromPrimitiveToObject(from);
+    	Class<?> fromClass = from;
+    	if (fromClass.isPrimitive()) {
+    		fromClass = fromPrimitiveToObject(fromClass);
     	}
 
-    	return to.isAssignableFrom(from);
+    	return toClass.isAssignableFrom(fromClass);
     }
     
     /**

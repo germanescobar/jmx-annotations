@@ -1,6 +1,11 @@
 package net.gescobar.jmx.util;
 
 public class StringUtils {
+	
+	/**
+	 * Hide public constructor.
+	 */
+	private StringUtils() {}
 
 	/**
      * Helper method. Upper case the first letter of the received argument.

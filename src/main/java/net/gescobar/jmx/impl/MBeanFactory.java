@@ -33,7 +33,12 @@ import net.gescobar.jmx.annotation.ManagedOperation;
  * 
  * @author German Escobar
  */
-public class MBeanFactory {
+public final class MBeanFactory {
+	
+	/**
+	 * Hide public constructor.
+	 */
+	private MBeanFactory() {}
 
 	/**
 	 * Creates a DynamicMBean from an object annotated with {@link ManagedBean} exposing all methods and attributes
@@ -218,8 +223,8 @@ public class MBeanFactory {
 	    	if ( !existsAttribute ) {
 	    		
 	    		// add the MBeanAttribute to the collection
-	    		MBeanAttributeInfo mBeanAttribute = buildMBeanAttribute(objectType, attributeName, 
-	    				attributeType, getterMethod, setterMethod, method);
+	    		MBeanAttributeInfo mBeanAttribute = buildMBeanAttribute(attributeName, attributeType, getterMethod, 
+	    				setterMethod, method);
 	    		if (mBeanAttribute != null) { // it can be null if it is neither readable or writable
 	    			mBeanAttributes.add( mBeanAttribute );
 	    		}
@@ -327,7 +332,6 @@ public class MBeanFactory {
     	 * Helper method. Builds an MBeanAttributeInfo. As a precondition we know that there is public getter or 
     	 * setter method for the attribute that it's annotated with {@link ManagedAttribute}.
     	 * 
-    	 * @param objectType the class of the object for which we are trying to create an MBean
     	 * @param attributeName the name of the attribute for which we are trying to build the MBeanAttributeInfo.
     	 * @param attributeType the class of the attribute for which we are trying to build the MBeanAttributeInfo.
     	 * @param getterMethod the getter method of the attribute ... can be null.
@@ -336,7 +340,7 @@ public class MBeanFactory {
     	 * 
     	 * @return a constructed MBeanAttributeInfo object or null if the attribute is neither readable or writable.
     	 */
-    	private MBeanAttributeInfo buildMBeanAttribute(Class<?> objectType, String attributeName, 
+    	private MBeanAttributeInfo buildMBeanAttribute(String attributeName, 
     			Class<?> attributeType, Method getterMethod, Method setterMethod, Method annotatedMethod) {
         	
         	ManagedAttribute managedAttribute = annotatedMethod.getAnnotation(ManagedAttribute.class);
