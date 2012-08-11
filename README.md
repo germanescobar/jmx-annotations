@@ -1,5 +1,7 @@
 # JMX Annotations
 
+[![Build Status](https://buildhive.cloudbees.com/job/germanescobar/job/jmx-annotations/badge/icon)](https://buildhive.cloudbees.com/job/germanescobar/job/jmx-annotations/)
+
 A lightweight library that has no external dependencies and simplifies the creation and registration of JMX MBeans by providing some annotations that you can easily add to your classes.
 
 Let's take a look at the following class:
