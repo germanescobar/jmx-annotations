@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>net.gescobar</groupId>
+	<artifactId>jmx-annotations</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	
+	<name>JMX Annotations</name>
+	
+	<scm>
+		<url>scm:git:git@github.com:germanescobar/jmx-annotations.git</url>
+		<connection>scm:git:git@github.com:germanescobar/jmx-annotations.git</connection>
+	</scm>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.7</version>
+			<scope>test</scope>
+		</dependency>
+            
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<inherited>true</inherited>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>false</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<optimize>true</optimize>
+					<compilerVersion>1.6</compilerVersion>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+			
+			<!-- generate sources -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.1</version>
+				<executions>
+					<execution>
+						<id>bundle-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- generate javadoc -->
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>javadoc-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration />
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	<distributionManagement>  
+ 		<repository>  
+  			<id>elibom</id>  
+  			<url>http://repository.elibom.net/nexus/content/repositories/releases</url>  
+ 		</repository>  
+ 		  
+ 		<snapshotRepository>  
+  			<id>elibom</id>   
+  			<url>http://repository.elibom.net/nexus/content/repositories/snapshots</url>  
+ 		</snapshotRepository>  
+	</distributionManagement>
+	
+</project>
