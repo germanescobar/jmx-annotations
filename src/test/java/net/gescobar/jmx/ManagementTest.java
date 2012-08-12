@@ -88,6 +88,24 @@ public class ManagementTest {
 		
 	}
 	
+	@Test(dependsOnMethods="shouldRegisterAndUnregisterAnnotatedObject")
+	public void shouldInstrumentObjectWithEnum() throws Exception {
+		
+		String name = "org.test:type=EnumAnnotatedCounter424974";
+		
+		EnumAnnotatedCounter counter = new EnumAnnotatedCounter();
+		Management.register(counter, name);
+		
+		ObjectName on = new ObjectName(name);
+		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+	
+		Assert.assertEquals( mBeanServer.getAttribute(on, "state"), null);
+		
+		mBeanServer.setAttribute( on, new Attribute("state", EnumAnnotatedCounter.State.STOPPED) );
+		Assert.assertEquals( mBeanServer.getAttribute(on, "state"), EnumAnnotatedCounter.State.STOPPED);
+		
+	}
+	
 	@Test(expectedExceptions=IllegalArgumentException.class)
 	public void shouldNotRegisterNullObject() throws Exception {
 		Management.register(null, "org.test:type=Counter7464789");
