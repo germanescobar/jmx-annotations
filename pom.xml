@@ -3,7 +3,7 @@
 	
 	<groupId>net.gescobar</groupId>
 	<artifactId>jmx-annotations</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	
 	<name>JMX Annotations</name>
 	
