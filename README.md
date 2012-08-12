@@ -7,7 +7,6 @@ A lightweight library (with no external dependencies) that simplifies the creati
 Take a look at the following class:
 
 ```java
-@ManagedBean
 public class Statistics {
 	
 	public int counter;
@@ -29,7 +28,7 @@ public class Statistics {
 }
 ```
 
-As you can see the class is annotated with `net.gescobar.jmx.annotation.ManagedBean`, the `getCounter()` method with `net.gescobar.jmx.annotation.ManagedAttribute` and the `resetCounter()` method with `net.gescobar.jmx.annotation.ManagedOperation`. We can now register the JMX MBean in one single line of code:
+As you can see the `getCounter()` method is annotated with `ManagedAttribute` and the `resetCounter()` method with `ManagedOperation`. We can now register the JMX MBean in one single line of code:
 
 ```java
 Management.register(new Statistics(), "org.test:type=Statistics");
