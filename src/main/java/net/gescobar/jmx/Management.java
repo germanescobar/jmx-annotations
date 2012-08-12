@@ -9,7 +9,6 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import net.gescobar.jmx.annotation.ManagedAttribute;
-import net.gescobar.jmx.annotation.ManagedBean;
 import net.gescobar.jmx.annotation.ManagedOperation;
 import net.gescobar.jmx.impl.MBeanFactory;
 

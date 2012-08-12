@@ -21,9 +21,9 @@ import javax.management.MBeanParameterInfo;
 
 import net.gescobar.jmx.Management;
 import net.gescobar.jmx.ManagementException;
+import net.gescobar.jmx.annotation.Description;
 import net.gescobar.jmx.annotation.Impact;
 import net.gescobar.jmx.annotation.ManagedAttribute;
-import net.gescobar.jmx.annotation.ManagedBean;
 import net.gescobar.jmx.annotation.ManagedOperation;
 
 /**
@@ -53,21 +53,14 @@ public final class MBeanFactory {
 		if (object == null) {
 			throw new IllegalArgumentException("No object specified.");
 		}
-		
-		if (!object.getClass().isAnnotationPresent(ManagedBean.class)) {
-			throw new IllegalArgumentException("Object is not a Managed Bean. Please annotate the class with @ManagedBean.");
-		}
      	
 		Class<?> objectType = object.getClass();
 		
 		// retrieve description
 		String description = "";
-    	if (objectType.isAnnotationPresent(ManagedBean.class)) {
-    	    description = objectType.getAnnotation(ManagedBean.class).description();
+    	if (objectType.isAnnotationPresent(Description.class)) {
+    	    description = objectType.getAnnotation(Description.class).value();
     	}
-		
-    	// constructors
-    	MBeanConstructorInfo[] mBeanConstructors = buildMBeanConstructors( objectType.getConstructors() );
     	
     	// build attributes and operations
     	Method[] methods = objectType.getMethods();
@@ -78,7 +71,7 @@ public final class MBeanFactory {
     	
     	// build the MBeanInfo
     	MBeanInfo mBeanInfo = new MBeanInfo(objectType.getName(), description, methodHandler.getMBeanAttributes(), 
-    			mBeanConstructors, methodHandler.getMBeanOperations(), new MBeanNotificationInfo[0]);
+    			new MBeanConstructorInfo[0], methodHandler.getMBeanOperations(), new MBeanNotificationInfo[0]);
     	
     	// create the MBean
 	    return new MBeanImpl(object, mBeanInfo);

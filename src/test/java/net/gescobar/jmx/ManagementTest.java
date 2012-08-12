@@ -10,7 +10,6 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import net.gescobar.jmx.annotation.ManagedAttribute;
-import net.gescobar.jmx.annotation.ManagedBean;
 import net.gescobar.jmx.annotation.ManagedOperation;
 
 import org.testng.Assert;
@@ -30,7 +29,7 @@ public class ManagementTest {
 		Assert.assertNotNull( mBeanInfo );
 		Assert.assertEquals( mBeanInfo.getClassName(), AnnotatedCounter.class.getName() );
 		Assert.assertEquals( mBeanInfo.getDescription(), "Annotated" );
-		Assert.assertEquals( mBeanInfo.getConstructors().length, 1 );
+		Assert.assertEquals( mBeanInfo.getConstructors().length, 0 );
 		Assert.assertEquals( mBeanInfo.getAttributes().length, 1 );
 		Assert.assertEquals( mBeanInfo.getOperations().length, 2 );
 		
@@ -90,11 +89,6 @@ public class ManagementTest {
 	}
 	
 	@Test(expectedExceptions=IllegalArgumentException.class)
-	public void shouldNotRegisterNotAnnotatedObject() throws Exception {
-		Management.register(new Object(), "org.test:type=Counter93765");
-	}
-	
-	@Test(expectedExceptions=IllegalArgumentException.class)
 	public void shouldNotRegisterNullObject() throws Exception {
 		Management.register(null, "org.test:type=Counter7464789");
 	}
@@ -128,7 +122,6 @@ public class ManagementTest {
 		
 	}
 	
-	@ManagedBean
 	private class AnnotatedCounterNoAttributes {
 		
 		@ManagedAttribute(readable=false)
@@ -136,7 +129,6 @@ public class ManagementTest {
 		
 	}
 	
-	@ManagedBean
 	private class WrongAnnotatedCounter {
 		
 		@ManagedAttribute

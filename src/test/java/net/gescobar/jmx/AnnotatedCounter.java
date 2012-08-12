@@ -1,11 +1,11 @@
 package net.gescobar.jmx;
 
+import net.gescobar.jmx.annotation.Description;
 import net.gescobar.jmx.annotation.Impact;
 import net.gescobar.jmx.annotation.ManagedAttribute;
-import net.gescobar.jmx.annotation.ManagedBean;
 import net.gescobar.jmx.annotation.ManagedOperation;
 
-@ManagedBean(description="Annotated")
+@Description("Annotated")
 public class AnnotatedCounter {
 	
 	private int counter;
