@@ -4,12 +4,9 @@ import static net.gescobar.jmx.util.StringUtils.capitalize;
 import static net.gescobar.jmx.util.StringUtils.decapitalize;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.management.DynamicMBean;
 import javax.management.MBeanAttributeInfo;
@@ -77,24 +74,6 @@ public final class MBeanFactory {
 	    return new MBeanImpl(object, mBeanInfo);
 	    
 	}
-	
-	/**
-	 * Helper method. Builds an array of MBeanConstructorInfo objects from the <code>constructors</code> argument.
-	 * 
-	 * @param constructors the Constructors from which we are creating the MBeanConstructorInfo.
-	 * 
-	 * @return an array of initialized MBeanConstructorInfo objects.
-	 */
-    private static MBeanConstructorInfo[] buildMBeanConstructors(Constructor<?>[] constructors) {
-    	
-    	Set<MBeanConstructorInfo> mBeanConstructors = new HashSet<MBeanConstructorInfo>();
-    	for (Constructor<?> constructor : constructors) {
-    		mBeanConstructors.add( new MBeanConstructorInfo("", constructor) );
-    	}
-    	
-    	return mBeanConstructors.toArray( new MBeanConstructorInfo[0] );
-    	
-    }
     
     /**
      * This class is used internally to handle the methods of the object that the 
