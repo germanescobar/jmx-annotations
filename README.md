@@ -59,7 +59,7 @@ If you are using Maven, you just need to add the dependency and the repository t
     <repositories>
         <repository>  
             <id>elibom</id>  
-            <url>http://repository.elibom.net/nexus/content/repositories/releases</url>  
+            <url>http://repository.elibom.net/nexus/content/groups/public/</url>  
         </repository>
     </repositories>
 
