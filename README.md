@@ -30,13 +30,13 @@ public class Statistics {
 }
 ```
 
-As you can see the `getCounter()` method is annotated with `ManagedAttribute` and the `resetCounter()` method with `ManagedOperation`. We can now register the JMX MBean in one single line of code:
+As you can see the `getCounter()` method is annotated with `@ManagedAttribute` and the `resetCounter()` method with `@ManagedOperation`. We can now register the JMX MBean in one single line of code:
 
 ```java
 Management.register(new Statistics(), "org.test:type=Statistics");
 ```
 
-This will create a DynamicMBean from the object and will register it in the default MBeanServer that is retrieved using `ManagementFactory.getPlatformMBeanServer()` method.
+This will create a DynamicMBean from the object and will register it in the default MBeanServer (it calls `ManagementFactory.getPlatformMBeanServer()` underneath).
 
 That's it. Enjoy!
 
