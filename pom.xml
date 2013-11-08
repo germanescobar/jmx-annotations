@@ -75,15 +75,18 @@
 	</build>
 	
 	<distributionManagement>  
- 		<repository>  
-  			<id>elibom</id>  
-  			<url>http://repository.elibom.net/nexus/content/repositories/releases</url>  
- 		</repository>  
- 		  
- 		<snapshotRepository>  
-  			<id>elibom</id>   
-  			<url>http://repository.elibom.net/nexus/content/repositories/snapshots</url>  
- 		</snapshotRepository>  
+        <repository>
+            <id>releases</id>
+            <name>Internal Releases</name>
+            <url>http://maven.polarislabs.com/content/repositories/releases/</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Internal Snapshots</name>
+            <url>http://maven.polarislabs.com/content/repositories/snapshots/</url>
+            <layout>default</layout>
+        </snapshotRepository>
 	</distributionManagement>
 	
 </project>
