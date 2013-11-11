@@ -445,13 +445,14 @@ public class MBeanFactory {
                 String name = "p" + i;
                 String description = "";
                 
+                if (paramDesc.containsKey(name)) {
+                    description = paramDesc.get(name);
+                }
+                
                 if (paramNames.containsKey(name)) {
                     name = paramNames.get(name);
                 }
                 
-                if (paramDesc.containsKey(name)) {
-                    description = paramDesc.get(name);
-                }
                 
                 MBeanParameterInfo parameterInfo = new MBeanParameterInfo(name, paramsTypes[i].getName(), description);
                 mBeanParameters[i] = parameterInfo;
