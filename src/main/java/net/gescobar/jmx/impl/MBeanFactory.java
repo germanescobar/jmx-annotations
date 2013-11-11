@@ -33,12 +33,29 @@ import net.gescobar.jmx.annotation.ManagedOperation;
  *
  * @author German Escobar
  */
-public final class MBeanFactory {
+public class MBeanFactory {
 
     /**
      * Hide public constructor.
      */
     private MBeanFactory() {
+    }
+    
+    /**
+     * Creates a DynamicMBean from an object annotated with {@link ManagedBean}
+     * exposing all methods and attributes annotated with
+     * {@link ManagedOperation} and {@link ManagedAttribute} respectively.
+     *
+     * @param object the class representing the object type resolved by TargetObjectResolver.
+     *
+     * @return a constructed DynamicMBean object that can be registered with any
+     * MBeanServer.
+     */
+    public static DynamicMBean createMBean(Object object) {
+        if (object == null) {
+            throw new IllegalArgumentException("No object specified.");
+        }
+        return createMBean(object.getClass(), new InstanceResolver(object));
     }
 
     /**
@@ -46,18 +63,16 @@ public final class MBeanFactory {
      * exposing all methods and attributes annotated with
      * {@link ManagedOperation} and {@link ManagedAttribute} respectively.
      *
-     * @param object the object from which we are creating the DynamicMBean.
+     * @param objectType the class representing the object type resolved by TargetObjectResolver.
+     * @param targetResolver A resolver capable of resolving an instance of the given type.
      *
      * @return a constructed DynamicMBean object that can be registered with any
      * MBeanServer.
      */
-    public static DynamicMBean createMBean(Object object) {
-
-        if (object == null) {
-            throw new IllegalArgumentException("No object specified.");
+    public static DynamicMBean createMBean(Class<?> objectType, AbstractInstanceResolver targetResolver) {
+        if (objectType == null) {
+            throw new IllegalArgumentException("No object class specified.");
         }
-
-        Class<?> objectType = object.getClass();
 
         // retrieve description
         String description = "";
@@ -77,7 +92,7 @@ public final class MBeanFactory {
                 new MBeanConstructorInfo[0], methodHandler.getMBeanOperations(), new MBeanNotificationInfo[0]);
 
         // create the MBean
-        return new MBeanImpl(object, mBeanInfo);
+        return new MBeanImpl(targetResolver, mBeanInfo);
 
     }
 
@@ -226,7 +241,7 @@ public final class MBeanFactory {
             }
 
         }
-
+        
         /**
          * Helper method. Tells if the method is a getter or not. It checks if
          * the method name starts with "get" or "is", that the method has no
@@ -395,16 +410,11 @@ public final class MBeanFactory {
 
         /**
          * Helper method. Builds an array of MBeanParameterInfo objects that
-         * represent the parameters.
+         * represent the parameters, using the DescriptorFields annotation style from the JMX 2.0 specification.
          *
-         * @param paramsTypes the type of the parameters from which we are
-         * building the MBeanParameterInfo array.
-         * @param paramsAnnotations the annotations on the parameters .. we are
-         * not using this info yet but we will need it to retrieve the
-         * description of the parameters.
+         * @param method the method having parameter info build for it.
          *
-         * @return an array of MBeanParameterInfo objects of the same size of
-         * the <code>paramsTypes</code> argument.
+         * @return an array of MBeanParameterInfo objects describing the Method.
          */
         private MBeanParameterInfo[] buildMBeanParameters(Method method) {
             Class[] paramsTypes = method.getParameterTypes();
