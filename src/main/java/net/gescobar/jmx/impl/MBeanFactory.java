@@ -426,17 +426,16 @@ public class MBeanFactory {
             if (hasDescriptorFields) {
                 String[] pairs = method.getAnnotation(DescriptorFields.class).value();
                 for (int i = 0; i < pairs.length; i++) {
-                    String param = pairs[i].substring(0, pairs[i].indexOf('='));
-                    String name = pairs[i].substring(pairs[i].indexOf('='));
-                    String desc = "";
+                    String[] keydesc = pairs[i].split(";");
+                    String[] keyval = keydesc[0].split("=");
                     
-                    if (name.indexOf(";") != -1) {
-                        desc = name.substring(name.indexOf(";"));
-                        name = name.substring(0, name.indexOf(";"));
+                    String desc = "";
+                    if (keydesc.length > 1) {
+                        desc = keydesc[1];
                     }
                     
-                    paramNames.put(param, name);
-                    paramDesc.put(param, desc);
+                    paramNames.put(keyval[0], keyval[1]);
+                    paramDesc.put(keyval[0], desc);
                 }
             }
 
@@ -450,7 +449,7 @@ public class MBeanFactory {
                     name = paramNames.get(name);
                 }
                 
-                if (paramDesc.containsKey(description)) {
+                if (paramDesc.containsKey(name)) {
                     description = paramDesc.get(name);
                 }
                 
